@@ -79,10 +79,10 @@ def execute(filters=None):
 def get_columns():
     return [
         {"label": "Pos", "fieldname": "pos", "fieldtype": "Int", "width": 40},
-        {"label": "Ingredient", "fieldname": "ingredient", "fieldtype": "Data", "width": 670},
-        {"label": "ACT QTY", "fieldname": "act_qty", "fieldtype": "Float", "width": 160},
-        {"label": "Base Unit", "fieldname": "base_unit", "fieldtype": "Data", "width": 160},
-        {"label": "AVE", "fieldname": "ave", "fieldtype": "Currency", "width": 170},
-        {"label": "COS", "fieldname": "cos", "fieldtype": "Currency", "width": 170},
-        {"label": "COS %", "fieldname": "cos_percent", "fieldtype": "Percent", "width": 170},
+        {"label": "Ingredient", "fieldname": "ingredient", "fieldtype": "Data", "width": 600},
+        {"label": "ACT QTY", "fieldname": "act_qty", "fieldtype": "Float", "width": 150},
+        {"label": "Base Unit", "fieldname": "base_unit", "fieldtype": "Data", "width": 150},
+        {"label": "AVE", "fieldname": "ave", "fieldtype": "Currency", "width": 150},
+        {"label": "COS", "fieldname": "cos", "fieldtype": "Currency", "width": 150},
+        {"label": "COS %", "fieldname": "cos_percent", "fieldtype": "Percent", "width": 150},
     ]
