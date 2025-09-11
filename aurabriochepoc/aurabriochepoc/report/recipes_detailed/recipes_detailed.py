@@ -19,12 +19,15 @@ def execute(filters=None):
             "pos": None,
             "act_qty": None,
             "base_unit": None,
-            "ave": None,
-            "cos": None,
+            "ave": standard_rate,
+            "cos": bom.total_cost,
             "cos_percent": None,
             "indent": 0.0,
             "expanded": 0
         })
+
+
+
 
         # ===== Child: BOM Items =====
         bom_items = frappe.get_all("BOM Item",
@@ -39,7 +42,7 @@ def execute(filters=None):
 
             data.append({
                 "pos": pos,
-                "ingredient": f"{bi.item_name} ({bi.item_code})",
+                "ingredient": f"{bi.item_name}",
                 "act_qty": bi.qty,
                 "base_unit": bi.stock_uom,
                 "ave": bi.rate,
@@ -49,18 +52,6 @@ def execute(filters=None):
                 "parent": bom.item
             })
             pos += 1
-
-        # ===== Footer: Standard Rate (same level as header) =====
-        data.append({
-            "ingredient": f"Net Sales Price: {standard_rate}",
-            "pos": None,
-            "act_qty": None,
-            "base_unit": None,
-            "ave": None,
-            "cos": None,
-            "cos_percent": None,
-            "indent": 1.0   # Same as Main Item
-        })
 
         # Spacer row
         data.append({
@@ -79,7 +70,7 @@ def execute(filters=None):
 def get_columns():
     return [
         {"label": "Pos", "fieldname": "pos", "fieldtype": "Int", "width": 40},
-        {"label": "Ingredient", "fieldname": "ingredient", "fieldtype": "Data", "width": 600},
+        {"label": "Ingredient", "fieldname": "ingredient", "fieldtype": "Data", "width": 400},
         {"label": "ACT QTY", "fieldname": "act_qty", "fieldtype": "Float", "width": 150},
         {"label": "Base Unit", "fieldname": "base_unit", "fieldtype": "Data", "width": 150},
         {"label": "AVE", "fieldname": "ave", "fieldtype": "Currency", "width": 150},
