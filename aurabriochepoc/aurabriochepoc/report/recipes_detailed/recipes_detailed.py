@@ -5,10 +5,15 @@ def execute(filters=None):
     columns = get_columns()
     data = []
 
+    bom_filters = {"is_active": 1}
+    if filters and filters.get("item"):
+        bom_filters["item"] = filters.get("item")
+
     # Get BOMs
     boms = frappe.get_all("BOM",
-        filters={"is_active": 1},
+        filters=bom_filters,
         fields=["name", "item", "item_name", "total_cost"])
+
 
     for bom in boms:
         standard_rate = frappe.db.get_value("Item", bom.item, "standard_rate") or 0
