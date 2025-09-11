@@ -18,21 +18,19 @@ def execute(filters=None):
     for bom in boms:
         standard_rate = frappe.db.get_value("Item", bom.item, "standard_rate") or 0
 
-        # ===== Header: Main Item (bold row) =====
+        # ===== Header: Main Item =====
         data.append({
+            "net_sales_price": standard_rate,   # Sirf yahan value hogi
             "ingredient": f"{bom.item_name} ({bom.item})",
             "pos": None,
             "act_qty": None,
             "base_unit": None,
-            "ave": standard_rate,
+            "ave": None,
             "cos": bom.total_cost,
             "cos_percent": None,
             "indent": 0.0,
             "expanded": 0
         })
-
-
-
 
         # ===== Child: BOM Items =====
         bom_items = frappe.get_all("BOM Item",
@@ -46,6 +44,7 @@ def execute(filters=None):
             total_cos += cos
 
             data.append({
+                "net_sales_price": None,   # Niche rows me blank hoga
                 "pos": pos,
                 "ingredient": f"{bi.item_name}",
                 "act_qty": bi.qty,
@@ -58,6 +57,7 @@ def execute(filters=None):
             })
             pos += 1
 
+
         # Spacer row
         data.append({
             "ingredient": None,
@@ -67,6 +67,7 @@ def execute(filters=None):
             "ave": None,
             "cos": None,
             "cos_percent": None,
+            "net_sales_price": None,   # Sirf yahan value hogi
 		})
 
     return columns, data
@@ -76,9 +77,11 @@ def get_columns():
     return [
         {"label": "Pos", "fieldname": "pos", "fieldtype": "Int", "width": 40},
         {"label": "Ingredient", "fieldname": "ingredient", "fieldtype": "Data", "width": 400},
+        {"label": "Net Sales Price", "fieldname": "net_sales_price", "fieldtype": "Currency", "width": 150},
         {"label": "ACT QTY", "fieldname": "act_qty", "fieldtype": "Float", "width": 150},
         {"label": "Base Unit", "fieldname": "base_unit", "fieldtype": "Data", "width": 150},
         {"label": "AVE", "fieldname": "ave", "fieldtype": "Currency", "width": 150},
         {"label": "COS", "fieldname": "cos", "fieldtype": "Currency", "width": 150},
         {"label": "COS %", "fieldname": "cos_percent", "fieldtype": "Percent", "width": 150},
     ]
+
